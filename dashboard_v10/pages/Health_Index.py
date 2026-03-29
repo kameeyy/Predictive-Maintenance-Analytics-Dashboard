@@ -142,38 +142,6 @@ def show():
     st.pyplot(fig2)
     plt.close()
 
-    # ── Why HI ────────────────────────────────────────────────────────────
-    st.divider()
-    st.subheader("Why Health Index instead of piecewise RUL?")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**❌ Piecewise RUL (failed)**")
-        fig, ax = plt.subplots(figsize=(5, 2.5), facecolor='#0e1117')
-        ax.set_facecolor('#1e1e2e')
-        rul = np.concatenate([np.ones(100), np.linspace(1, 0.01, 100)])
-        ax.plot(rul, color='#f44336', lw=2)
-        ax.fill_between(range(100), 1, alpha=0.15, color='gray', label='Flat 80%')
-        ax.set_title('Piecewise RUL — flat region problem', color='white', fontsize=9)
-        ax.tick_params(colors='white', labelsize=7)
-        ax.spines[:].set_color('#333')
-        ax.legend(facecolor='#1e1e2e', labelcolor='white', fontsize=7)
-        plt.tight_layout(); st.pyplot(fig); plt.close()
-        st.error("Model learns to predict 1.0 always → R²= -6.6 on test")
-    with col2:
-        st.markdown("**✅ Health Index (works)**")
-        fig, ax = plt.subplots(figsize=(5, 2.5), facecolor='#0e1117')
-        ax.set_facecolor('#1e1e2e')
-        t = np.linspace(0, 1, 200)
-        np.random.seed(0)
-        hi = np.clip(np.where(t > 0.5, 1 - (t - 0.5) / 0.5, 1 - 0.05 * t)
-                     + 0.01 * np.random.randn(200), 0, 1)
-        ax.plot(hi, color='#4CAF50', lw=2)
-        ax.set_title('Health Index — monotonic decline', color='white', fontsize=9)
-        ax.tick_params(colors='white', labelsize=7)
-        ax.spines[:].set_color('#333')
-        plt.tight_layout(); st.pyplot(fig); plt.close()
-        st.success("Monotonic signal → model learns real degradation → R²=0.9754")
-
     # ── Feature list ──────────────────────────────────────────────────────
     st.divider()
     st.subheader("34 Features Extracted per Sample")

@@ -10,7 +10,6 @@ def show():
     df_results, df_preds, df_shap, df_feats, DATA_LOADED, df_shap_bilstm = load_all_data()
 
     st.title("🧠 SHAP Feature Importance")
-    st.markdown("Which vibration features drive each model's Health Index prediction? (37.5Hz11kN condition)")
     st.divider()
 
     model_shap = st.selectbox(
@@ -95,7 +94,7 @@ def show():
     st.pyplot(fig)
     plt.close()
 
-    st.caption(f"📊 Source: {source}")
+
     st.divider()
 
     st.markdown("""
